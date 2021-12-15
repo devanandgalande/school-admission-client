@@ -25,8 +25,8 @@ code {
     }
     
     @page {
-      margin: 0% !important
-      
+      margin: 0% !important;
+      size: letter;
     }
     
 }

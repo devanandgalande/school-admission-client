@@ -91,6 +91,7 @@ export default function Checkout() {
   const [errmsg, seterrmsg] = React.useState('');
   const [validateForm, setValidateForm] = React.useState(false);
   const [parentFormValid, setParentFormValid] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const values = inputs
 
   React.useEffect(() => {
@@ -121,19 +122,22 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-
+  
   const handleFormSubmit = () => {
     seterrmsg('');
+    setLoading(true);
     studentdataService.create(inputs)
       .then((response) => {
         // console.log(response);
         setInputs(response.data);
         // handleNext()
+        setLoading(false);
         setActiveStep(activeStep + 1)
       })
       .catch(err => {
         // console.log(err);
         seterrmsg(err.message)
+        setLoading(false);
       })
   }
 
@@ -233,7 +237,14 @@ export default function Checkout() {
                       variant="contained"
                       onClick={()=>{document.getElementById("parentformbtn").click();}}
                       sx={{ mt: 3, ml: 1 }}
-                    >Submit</Button>
+                      disabled={loading}
+                    >{loading && (
+                      <i
+                        className="fa fa-refresh fa-spin"
+                        style={{ marginRight: "5px" }}
+                      />
+                    )}
+                      Submit</Button>
                     : 
                     <Button
                       inputMode=""
