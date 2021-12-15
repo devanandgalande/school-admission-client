@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.printable {
+  display:  none;
+}
+@media print { 
+  .no-print  { display: none;}
+  .printable  { display: block;
+  margin-block-start: 10px;}
+  * {
+    font-size: 12px;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    
+    }
+    
+    @page {
+      margin: 0% !important
+      
+    }
+    
+}
+
+#root {
+  background-color: #282c34;
+}
