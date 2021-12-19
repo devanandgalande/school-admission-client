@@ -198,7 +198,7 @@ export default function Checkout() {
         
       </AppBar>
       <Container component="main" maxWidth="md" sx={{ mb: 3 }} >
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 3 }, p: { xs: 2, md: 3 } }} >
+        <Paper variant="outlined" sx={{ my: { xs:2, md: 1.5 }, p: { xs: 2, md: 2 } }} >
           <div className="no-print">
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
