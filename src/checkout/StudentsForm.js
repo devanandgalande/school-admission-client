@@ -11,10 +11,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function StudentsForm({ handleChange, values, setValidateForm }) {
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First Name is required!'),
-    middleName: Yup.string().required('Middle Name is required!'),
-    lastName: Yup.string().required('Last Name is required!'),
-    placeOfBirth: Yup.string().required("Place of Birth is required!"),
+    firstName: Yup.string().required('First Name is required!')
+                            .max(20, 'First Name must have 20 chars only!'),
+    middleName: Yup.string().required('Middle Name is required!')
+                            .max(20, 'Middle Name must have 20 chars only!'),
+    lastName: Yup.string().required('Last Name is required!').max(20, 'Last Name must have 20 chars only!'),
+    placeOfBirth: Yup.string().required("Place of Birth is required!").max(30, 'Place must have 30 chars only!'),
     whatsapp: Yup.string().required("WhatsApp Number is required!")
                           .matches("^([0-9]{10})$", 'WhatsApp No. must contain 10 digits!'),
     dob: Yup.string().typeError('Date of Birth is required!')
@@ -24,14 +26,14 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                     (value)=> new Date(value)>=new Date("2018-10-01") && new Date(value)<=new Date("2019-12-31")),
                     // .max("31-12-2019", "Date of Birth must be earlier than 31st Dec, 2019"),
     gender: Yup.string().required('Gender is required!'),
-    address: Yup.string().required('Address is required!'),
-    city: Yup.string().required('City is required!'),
-    state: Yup.string().required('State is required!'),
+    address: Yup.string().required('Address is required!').max(150, 'Address Name must have 150 chars only!'),
+    city: Yup.string().required('City is required!').max(30, 'City must have 30 chars only!'),
+    state: Yup.string().required('State is required!').max(30, 'State must have 30 chars only!'),
     zip: Yup.string().required('Zip is required!')
                       .matches("^(\\d{6,6})$",'Zip must contain 6 digits!'),
-    country: Yup.string().required('Country is required!'),
-    caste: Yup.string().required('Caste is required!'),
-    // subcaste: Yup.string().required('Sub-Caste is required')
+    country: Yup.string().required('Country is required!').max(30, 'City must have 30 chars only!'),
+    caste: Yup.string().required('Caste is required!').max(30, 'Caste must have 30 chars only!'),
+    subcaste: Yup.string().max(30, 'Sub-caste must have 30 chars only!')
     // standard: Yup.string().required('This field is required'),
     // consent: Yup.bool().oneOf([true], 'Please check the consent')
   })

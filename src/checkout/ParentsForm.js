@@ -10,37 +10,37 @@ import { yupResolver } from '@hookform/resolvers/yup';
 export default function ParentsForm({ handleChange, values, setParentFormValid }) {
 
   const validSchema = Yup.object().shape({
-    fatherName: Yup.string().required('Father name is required!'),
+    fatherName: Yup.string().required('Father name is required!').max(50, 'Name must have 50 chars only!'),
     fatherAge: Yup.number().typeError('Age is required!')
                           .required('Age is required!')
                           .min(10, 'Age must be greater than or equal to 10!')
                           .max(150, 'Age must be less than or equal to 150!')
                           .integer('Age must be an Integer!'),
-    fatherProfession: Yup.string().required('Profession is required!'),
-    fatherLang: Yup.string().required('Mother Tongue is required!'),
-    fatherEducation: Yup.string().required('Education is required!'),
+    fatherProfession: Yup.string().required('Profession is required!').max(20, 'Profession must have 20 chars only!'),
+    fatherLang: Yup.string().required('Mother Tongue is required!').max(20, 'Field must have 20 chars only!'),
+    fatherEducation: Yup.string().required('Education is required!').max(20, 'Field must have 20 chars only!'),
     fatherContact: Yup.string().required('Contact is required!')
                                .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     fatherIncome: Yup.number().typeError('Income details is required!')
                               .required('Income details is required!')
                               .positive('Income must be positive!'),
-    fatherLangKnown: Yup.string().required('Languages known is required!'),
-    motherName: Yup.string().required('Mother name is required!'),
+    fatherLangKnown: Yup.string().required('Languages known is required!').max(50, 'Field must have 50 chars only!'),
+    motherName: Yup.string().required('Mother name is required!').max(50, 'Name must have 50 chars only!'),
     motherAge: Yup.number().typeError('Age is required!')
                           .required('Age is required!')
                           .min(10, 'Age must be greater than or equal to 10!')
                           .max(150, 'Age must be less than or equal to 150!')
                           .integer('Age must be an Integer!'),
-    motherProfession: Yup.string().required('Profession is required!'),
-    motherLang: Yup.string().required('Mother Tongue is required!'),
-    motherEducation: Yup.string().required('Education is required!'),
+    motherProfession: Yup.string().required('Profession is required!').max(20, 'Field must have 20 chars only!'),
+    motherLang: Yup.string().required('Mother Tongue is required!').max(20, 'Field must have 20 chars only!'),
+    motherEducation: Yup.string().required('Education is required!').max(20, 'Field must have 20 chars only!'),
     motherContact: Yup.string().required('Contact is required!')
                               .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     motherIncome: Yup.number().typeError('Income details is required!')
                               .required('Income details is required!')
                               .positive('Income must be positive!'),
     motherLangKnown: Yup.string().required('Languages known is required!'),
-    mentorContact: Yup.string().matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
+    mentorContact: Yup.string().matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!').max(50, 'Field must have 50 chars only!'),
     // mentorIncome: Yup.number().integer('Income must be positive').nullable(),
     
   });
