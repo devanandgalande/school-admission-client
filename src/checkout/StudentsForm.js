@@ -4,32 +4,35 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Button, Chip, Divider, FormControl, FormHelperText, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
+import { Button, Chip, Divider, FormHelperText, FormLabel, ListItem, ListItemAvatar, Radio, RadioGroup } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function StudentsForm({ handleChange, values, setValidateForm }) {
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First Name is required'),
-    middleName: Yup.string().required('Middle Name is required'),
-    lastName: Yup.string().required('Last Name is required'),
-    mothersName: Yup.string().required("Mother's name is required"),
-    dob: Yup.string().typeError('Date of Birth is required')
-                    .required('Date of Birth is required')
+    firstName: Yup.string().required('First Name is required!'),
+    middleName: Yup.string().required('Middle Name is required!'),
+    lastName: Yup.string().required('Last Name is required!'),
+    placeOfBirth: Yup.string().required("Place of Birth is required!"),
+    whatsapp: Yup.string().required("WhatsApp Number is required!")
+                          .matches("^([0-9]{10})$", 'WhatsApp No. must contain 10 digits!'),
+    dob: Yup.string().typeError('Date of Birth is required!')
+                    .required('Date of Birth is required!')
                     // .min(new Date("2018-10-01").toLocaleDateString(), "Date of Birth must be later than 1st Oct, 2018")
-                    .test("dob","Date of Birth must be between 1st Oct, 2018 to 31st Dec, 2019",
+                    .test("dob","Date of Birth must be between 1st Oct, 2018 to 31st Dec, 2019!",
                     (value)=> new Date(value)>=new Date("2018-10-01") && new Date(value)<=new Date("2019-12-31")),
                     // .max("31-12-2019", "Date of Birth must be earlier than 31st Dec, 2019"),
-    gender: Yup.string().required('Gender is required'),
-    address: Yup.string().required('Address is required'),
-    city: Yup.string().required('City is required'),
-    state: Yup.string().required('State is required'),
-    zip: Yup.string().required('Zip is required')
-                      .matches("^(\\d{6,6})$",'Invalid Pin'),
-    country: Yup.string().required('Country is required'),
-    caste: Yup.string().required('Caste is required'),
-    standard: Yup.string().required('This field is required'),
+    gender: Yup.string().required('Gender is required!'),
+    address: Yup.string().required('Address is required!'),
+    city: Yup.string().required('City is required!'),
+    state: Yup.string().required('State is required!'),
+    zip: Yup.string().required('Zip is required!')
+                      .matches("^(\\d{6,6})$",'Zip must contain 6 digits!'),
+    country: Yup.string().required('Country is required!'),
+    caste: Yup.string().required('Caste is required!'),
+    // subcaste: Yup.string().required('Sub-Caste is required')
+    // standard: Yup.string().required('This field is required'),
     // consent: Yup.bool().oneOf([true], 'Please check the consent')
   })
   const { register, control, handleSubmit, formState: { errors } } = useForm({
@@ -38,11 +41,11 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
 
   const onSubmit = data => {
     // isFormValid = true;
+    // handleChange('siblings')
     setValidateForm(true);
-    Object.assign(values,data);
-    // console.log(data);
+    Object.assign(values, data);
+    // console.log(values);
     // console.log(JSON.stringify(data, null, 2));
-
   };
 
   return (
@@ -51,7 +54,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
         <Typography variant="h6" color="primary" gutterBottom>
           Student Details
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={1} columnSpacing={4}>
           <Grid item xs={12} sm={4}>
             <TextField
               required
@@ -97,22 +100,35 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               helperText={errors.lastName?.message}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="mothersName"
-              name="mothersName"
-              label="Mother's Name"
+              id="placeOfBirth"
+              name="placeOfBirth"
+              label="Place of Birth"
               fullWidth
               variant="standard"
-              onChange={handleChange('mothersName')}
-              defaultValue={values.mothersName}
-              {...register('mothersName')}
-              error={Boolean(errors.mothersName)}
-              helperText={errors.mothersName?.message}
+              onChange={handleChange('placeOfBirth')}
+              defaultValue={values.placeOfBirth}
+              {...register('placeOfBirth')}
+              error={Boolean(errors.placeOfBirth)}
+              helperText={errors.placeOfBirth?.message}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="whatsapp"
+              name="whatsapp"
+              label="Parent's WhatsApp No."
+              fullWidth
+              variant="standard"
+              onChange={handleChange('whatsapp')}
+              defaultValue={values.whatsapp}
+              {...register('whatsapp')}
+              error={Boolean(errors.whatsapp)}
+              helperText={errors.whatsapp?.message}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -132,34 +148,65 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
             />
           </Grid>
           <Grid item xs={6}>
-            <FormLabel error={Boolean(errors.gender)} component="legend">Gender</FormLabel>
+            <FormLabel error={Boolean(errors.gender)} component="legend">Gender *</FormLabel>
             <Controller
-            control={control}
-            name="gender"
-            defaultValue={values.gender}
-            render={({field}) => (
-            <RadioGroup
-              row
+              control={control}
               name="gender"
-              size="small"
-              // value={value}
-              // onChange={onChange}
-              onChange={handleChange('gender')}
-              value={values.gender}
-              {...field}
-            >
-              <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
-              <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
-            </RadioGroup>
-             )} /> 
+              defaultValue={values.gender}
+              render={({ field }) => (
+                <RadioGroup
+                  row
+                  name="gender"
+                  size="small"
+                  onChange={handleChange('gender')}
+                  value={values.gender}
+                  {...field}
+                >
+                  <FormControlLabel value="Male" control={<Radio size="small" />} label="Male" />
+                  <FormControlLabel value="Female" control={<Radio size="small" />} label="Female" />
+                </RadioGroup>
+              )} />
             <FormHelperText error>{errors.gender?.message}</FormHelperText>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{paddingTop: 0}}>
+            <TextField
+              required
+              id="caste"
+              name="caste"
+              label="Caste"
+              fullWidth
+              variant="standard"
+              onChange={handleChange('caste')}
+              defaultValue={values.caste}
+              {...register('caste')}
+              error={Boolean(errors.caste)}
+              helperText={errors.caste?.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} style={{paddingTop: 0}}>
+            <TextField
+              required
+              id="subcaste"
+              name="subcaste"
+              label="Sub-Caste"
+              fullWidth
+              variant="standard"
+              onChange={handleChange('subcaste')}
+              defaultValue={values.subcaste}
+              {...register('subcaste')}
+              error={Boolean(errors.subcaste)}
+              helperText={errors.subcaste?.message}
+            />
           </Grid>
           <Grid item xs={12} sm={12} >
             <TextField
               id="address"
               name="address"
               label="Address"
+              multiline
+              rows={2}
               fullWidth
+              // style={{minHeight: "2.875em", display: 'block !important'}}
               variant="standard"
               onChange={handleChange('address')}
               defaultValue={values.address}
@@ -230,49 +277,76 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               helperText={errors.country?.message}
             />
           </Grid>
-          {/* &nbsp; */}
           <Grid item xs={12}>
-            <Divider variant="middle" color="grey" ><Chip/>
-            </Divider>
+            <Typography variant="h6" color="primary" gutterBottom>
+              Other Siblings in this School
+            </Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="caste"
-              name="caste"
-              label="Caste"
-              fullWidth
-              variant="standard"
-              onChange={handleChange('caste')}
-              defaultValue={values.caste}
-              {...register('caste')}
-              error={Boolean(errors.caste)}
-              helperText={errors.caste?.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} style={{paddingTop: 0}}>
+            {/* <List disablePadding > */}
+              <ListItem style={{paddingTop: 0}}>
+                <ListItemAvatar sx={{ textAlign: "center" }}>
+                  {"1."}
+                </ListItemAvatar>
+                <Grid container item xs={12} columnSpacing={4}>
+                  <Grid item xs={10} sm={6}>
+                    <TextField
+                      name="sibling1name"
+                      label="Name"
+                      fullWidth
+                      size="small"
+                      variant="standard"
+                      onChange={handleChange('sibling1name')}
+                      defaultValue={values.sibling1name}
+                    />
+                  </Grid>
+                  <Grid item xs={10} sm={4}>
+                    <TextField
+                      id="std"
+                      name="sibling1std"
+                      label="Standard"
+                      fullWidth
+                      size="small"
+                      variant="standard"
+                      onChange={handleChange('sibling1std')}
+                      defaultValue={values.sibling1std}
+                    />
+                  </Grid>
 
-            <FormControl fullWidth>
-              <InputLabel id="categorylabel">Category</InputLabel>
-              <Select
-                // labelId=""
-                id="category"
-                value={values.category}
-                label="Category"
-                size="small"
-                variant="standard"
-                onChange={handleChange('category')}
-              >
-                <MenuItem value={'SC'}>SC</MenuItem>
-                <MenuItem value={"ST"}>ST</MenuItem>
-                <MenuItem value={"NT"}>NT</MenuItem>
-                <MenuItem value={"VJ"}>VJ</MenuItem>
-                <MenuItem value={"OBC"}>OBC</MenuItem>
-              </Select>
-              <FormHelperText>If applicable, attach copy of caste certificate</FormHelperText>
-            </FormControl>
+                </Grid>
+              </ListItem>
+              <ListItem style={{paddingTop: 0}}>
+                <ListItemAvatar sx={{ textAlign: "center" }}>
+                  {"2."}
+                </ListItemAvatar>
+                <Grid container item xs={12} rowSpacing={1} columnSpacing={4}>
+                  <Grid item xs={10} sm={6}>
+                    <TextField
+                      name="sibling2name"
+                      label="Name"
+                      fullWidth
+                      size="small"
+                      variant="standard"
+                      onChange={handleChange('sibling2name')}
+                      defaultValue={values.sibling2name}
+                    />
+                  </Grid>
+                  <Grid item xs={10} sm={4}>
+                    <TextField
+                      id="sibling2std"
+                      name="sibling2std"
+                      label="Standard"
+                      fullWidth
+                      size="small"
+                      variant="standard"
+                      onChange={handleChange('sibling2std')}
+                      defaultValue={values.sibling2std}
+                    />
+                  </Grid>
+                </Grid>
+              </ListItem>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <TextField
               required
               id="standard"
@@ -297,32 +371,27 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               onChange={handleChange('lastSchool')}
               defaultValue={values.lastSchool}
             />
+          </Grid> */}
+          <Grid item xs={12}>
+            <Divider variant="middle" color="grey" sx={{my: 1}}><Chip label="Undertaking" />
+            </Divider>
           </Grid>
-          <Grid item xs={12} mt={2}>
+          <Grid item xs={12}>
             <FormControlLabel
-              
               control={
-                // <Controller
-                //   control={control}
-                //   name="consent"
-                //   defaultValue={values.consent ? true : false}
-                //   refs={register('consent')}
-                //   render={({ field: { onChange } }) => (
-                    <Checkbox
-                      color="primary"
-                      // onChange={e => onChange(e.target.checked)}
-                      checked 
-                      inputProps={{readOnly: true}}
-                    />
-              //     )}
-              //   />
+                <Checkbox
+                  color="primary"
+                  checked
+                  inputProps={{ readOnly: true }}
+                />
               }
-              label={"If admission is granted to my child/ward, I promise to abide by all the Rules of the School."}
+              label={<Typography component="caption" variant="subtitle1" align="center"> I have understood the admission procedure of Alphonsa High School and agree to follow it.
+                I undertake to respect the School's philosophy and abide by the rules of the School, If admission is granted to my child/ward.</Typography>}
             />
             <FormHelperText error={Boolean(errors.consent)}>{errors.consent?.message}</FormHelperText>
           </Grid>
         </Grid>
-        <Button id="sform1" type="submit" sx={{display: 'none'}} onClick={handleSubmit(onSubmit)} />
+        <Button id="sform1" type="submit" sx={{ display: 'none' }} onClick={handleSubmit(onSubmit)} />
       </form>
     </React.Fragment>
   );

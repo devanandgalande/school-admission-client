@@ -16,10 +16,12 @@ import StudentsForm from './StudentsForm';
 import Review from './Review';
 import studentdataService from '../services/studentdata.service';
 import { FormHelperText } from '@mui/material';
+import logo from '../logo_only.svg';
+import heading from '../heading.svg';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="whitesmoke" align="center">
+    <Typography className="no-print" variant="body2" color="whitesmoke" align="center">
       {'Copyright © '}
       <Link color="inherit" href="#">
         Alphonsa Pre-Primary School,Pune
@@ -30,14 +32,15 @@ function Copyright() {
   );
 }
 
-const steps = ['Student Details', 'Parents Details', 'Review Details'];
+const steps = ['Student Details', 'Parents Details', 'Print'];
 
 const data = {
   regNo: '',
   firstName: '',
   middleName: '',
   lastName: '',
-  mothersName: '',
+  placeOfBirth: '',
+  whatsapp: '',
   dob: '',
   gender: '',
   address: '',
@@ -46,9 +49,14 @@ const data = {
   zip: '',
   country: '',
   caste: '',
-  category: '',
-  standard: '',
-  lastSchool: '',
+  subcaste: '',
+  // siblings: [{name: '', std: ''}, {name: '', std: ''}],
+  sibling1name: '',
+  sibling1std: '',
+  sibling2name: '',
+  sibling2std: '',
+  // standard: '',
+  // lastSchool: '',
   // page 2
   fatherName: '',
   fatherAge: 0,
@@ -56,6 +64,8 @@ const data = {
   fatherLang: '',
   fatherEducation: '',
   fatherContact: '',
+  fatherIncome: 0,
+  fatherLangKnown: '',
 
   motherName: '',
   motherAge: 0,
@@ -63,6 +73,8 @@ const data = {
   motherLang: '',
   motherEducation: '',
   motherContact: '',
+  motherIncome: 0,
+  motherLangKnown: '',
 
   mentorName: '',
   mentorRelation: '',
@@ -71,8 +83,7 @@ const data = {
   mentorLang: '',
   mentorEducation: '',
   mentorContact: '',
-
-  monthlyIncome: 0
+  mentorIncome: 0
 
 }
 
@@ -80,8 +91,9 @@ const theme = createTheme({
   palette: {
     text: {
       secondary: "rgb(0 0 0 / 80%);",
-    }
-  }
+    },    
+  },
+  
 
 });
 
@@ -97,7 +109,7 @@ export default function Checkout() {
   React.useEffect(() => {
     if (validateForm) {
       setActiveStep(activeStep + 1);
-      setValidateForm(false);
+      // setValidateForm(false);
     }
     if (parentFormValid) {
       handleFormSubmit();
@@ -109,7 +121,7 @@ export default function Checkout() {
   const handleChange = input => e => {
     setInputs({
       ...inputs,
-      [input]: e.target.value
+      [input]: e.target.value.toUpperCase()
     })
   }
 
@@ -179,21 +191,15 @@ export default function Checkout() {
           position: 'relative',
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
+        
       >
-        <Typography component="h4" variant="h4"
-          color="inherit"
-          align="center"
-          fontFamily="fantasy"
-          mt={2}
-        >
-          ALPHONSA PRE-PRIMARY SCHOOL
-        </Typography>
+        <Box textAlign="center" className="no-print"><img src={logo} alt="logo" className="svg"/></Box>
+        <Box textAlign="center" className="printable"><img src={heading} alt="logo" className="svg-heading"/></Box>
+        
       </AppBar>
-      <Container component="main" maxWidth="md" sx={{ mb: 3 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 3 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h2" variant="h5" align="center">
-            Admission Application
-          </Typography>
+      <Container component="main" maxWidth="md" sx={{ mb: 3 }} >
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 3 }, p: { xs: 2, md: 3 } }} >
+          <div className="no-print">
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
@@ -201,6 +207,7 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
+          </div>
           <React.Fragment>
             {activeStep === steps.length - 1 ? (
               <React.Fragment>
@@ -209,8 +216,8 @@ export default function Checkout() {
                     Thank you for registration.
                   </Typography>
                   <Typography variant="subtitle1">
-                    Your Registration number is <strong>{inputs.regNo}</strong>. Please take the printout of your
-                    application form from below.
+                    Your Registration number is <strong><u>{inputs.regNo}</u></strong>. Please take printout of your
+                    application from below.
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     {<Button
@@ -256,7 +263,7 @@ export default function Checkout() {
                   }
 
                 </Box>
-                {errmsg ? <FormHelperText error>{errmsg}</FormHelperText> : ''}
+                {errmsg ? <FormHelperText error>{'Server error!!! Plese try again later!!!'}</FormHelperText> : ''}
               </React.Fragment>
             )}
           </React.Fragment>

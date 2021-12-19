@@ -14,18 +14,21 @@ code {
 .printable {
   display:  none;
 }
+
 @media print { 
   .no-print  { display: none;}
   .printable  { display: block;
-  margin-block-start: 10px;}
+  /* margin-block-start: 10px; */
+    }
   * {
-    font-size: 12px;
+    font-size: 14px;
     /* font-family: Arial, Helvetica, sans-serif; */
     
     }
     
     @page {
       margin: 0% !important;
+      margin-top: 0.4in !important;
       size: letter;
     }
     
@@ -33,4 +36,23 @@ code {
 
 #root {
   background-color: #282c34;
+}
+
+.svg {
+  width: 50vmax;
+  max-width: -webkit-fill-available;
+  max-width: stretch;
+}
+.svg-heading{
+  width: 100%;
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+  max-width: stretch;
+}
+textarea {
+  height: 2.875em !important;
+}
+
+input {
+  text-transform: uppercase;
 }
