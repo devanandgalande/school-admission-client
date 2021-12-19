@@ -170,7 +170,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 helperText={errors.fatherContact?.message}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Controller
                 name="fatherIncome"
                 control={control}
@@ -214,7 +214,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
             Child's Mother's Details
           </Typography>
           <Grid container spacing={1} columnSpacing={4}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="motherName"
@@ -313,7 +313,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 helperText={errors.motherContact?.message}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Controller
                 name="motherIncome"
                 control={control}

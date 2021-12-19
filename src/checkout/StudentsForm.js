@@ -385,7 +385,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                   inputProps={{ readOnly: true }}
                 />
               }
-              label={<Typography component="caption" variant="subtitle1" align="center"> I have understood the admission procedure of Alphonsa High School and agree to follow it.
+              label={<Typography variant="subtitle1" align="center"> I have understood the admission procedure of Alphonsa High School and agree to follow it.
                 I undertake to respect the School's philosophy and abide by the rules of the School, If admission is granted to my child/ward.</Typography>}
             />
             <FormHelperText error={Boolean(errors.consent)}>{errors.consent?.message}</FormHelperText>

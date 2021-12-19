@@ -52,7 +52,7 @@ export default function ReviewForm({ handleChange, values }) {
           />
         </Grid>
       </Grid>
-      <Divider variant="fullWidth" color="grey" sx={{ my: 2 }} />
+      <Divider variant="fullWidth" color="grey" sx={{ my: 1 }} />
       <ParentsForm
         handleChange={handleChange}
         values={values}
