@@ -469,7 +469,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
           </li>
           <li>The form is valid only for the child whose name is entered by the school office.
           </li>
-          <li>This school is recognized unaided english medium school. There are no fee concessions.
+          <li>This school is recognized Unaided English Medium School. There are no fee concessions.
             Fees are subject to rise.
           </li>
           <li>No Refund of the fees, once paid.
