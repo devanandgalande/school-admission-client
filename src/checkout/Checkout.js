@@ -235,7 +235,7 @@ export default function Checkout() {
                 {getStepContent(activeStep)}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    <Button disabled={loading} onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                       Back
                     </Button>
                   )}
@@ -263,7 +263,7 @@ export default function Checkout() {
                   }
 
                 </Box>
-                {errmsg ? <FormHelperText error>{'Server error!!! Plese try again later!!!'}</FormHelperText> : ''}
+                {errmsg ? <FormHelperText error>{'Server error! Plese try again later.'}</FormHelperText> : ''}
               </React.Fragment>
             )}
           </React.Fragment>
