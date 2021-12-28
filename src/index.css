@@ -39,7 +39,7 @@ code {
 }
 
 .svg {
-  width: 50vmax;
+  width: 50rem;
   max-width: -webkit-fill-available;
   max-width: stretch;
 }
