@@ -56,3 +56,12 @@ textarea {
 input {
   text-transform: uppercase;
 }
+
+.cust_list_type li{
+  list-style-type: "\203a";
+  padding: 0 1em;
+}
+.cust_list_type li::marker{
+  font-size: larger;
+  font-weight: 600;
+}

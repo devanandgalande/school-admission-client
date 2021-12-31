@@ -15,7 +15,7 @@ import ParentsForm from './ParentsForm';
 import StudentsForm from './StudentsForm';
 import Review from './Review';
 import studentdataService from '../services/studentdata.service';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, Grid } from '@mui/material';
 import logo from '../logo_only.svg';
 import heading from '../heading.svg';
 
@@ -91,9 +91,9 @@ const theme = createTheme({
   palette: {
     text: {
       secondary: "rgb(0 0 0 / 80%);",
-    },    
+    },
   },
-  
+
 
 });
 
@@ -134,7 +134,7 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  
+
   const handleFormSubmit = () => {
     seterrmsg('');
     setLoading(true);
@@ -191,27 +191,57 @@ export default function Checkout() {
           position: 'relative',
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
-        
+
       >
-        <Box textAlign="center" className="no-print"><img src={logo} alt="logo" className="svg"/></Box>
-        <Box textAlign="center" className="printable"><img src={heading} alt="logo" className="svg-heading"/></Box>
-        
+        <Box textAlign="center" className="no-print"><img src={logo} alt="logo" className="svg" /></Box>
+        <Box textAlign="center" className="printable"><img src={heading} alt="logo" className="svg-heading" /></Box>
+
       </AppBar>
       <Container component="main" maxWidth="md" sx={{ mb: 3 }} >
-        <Paper variant="outlined" sx={{ my: { xs:2, md: 1.5 }, p: { xs: 2, md: 2 } }} >
+        <Paper variant="outlined" sx={{ my: { xs: 2, md: 1.5 }, p: { xs: 2, md: 2 } }} >
           <div className="no-print">
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
           </div>
           <React.Fragment>
             {activeStep === steps.length - 1 ? (
               <React.Fragment>
                 <div className="no-print">
+                  <Grid container item sx={{ fontWeight: "300", fontSize: "normal" }}>
+                    <Typography variant="h6" color="primary">
+                      Notice
+                    </Typography>
+                    <ul type="disk">
+                      <li>
+                        Acquiring online registration form does not guarantee admission in the school,
+                        the seats available are limited.
+                      </li>
+                      <li>Forms should be submitted on <strong>10th &amp; 11th Jan 2022 </strong> between 
+                      <strong> 8:30 AM to 12:30 PM</strong> at school office.
+                      <ul id="cust_list_item1" className="cust_list_type">
+                        <li>Form No. N0001 to N0200 on Monday, 10th January, 2022</li>
+                        <li>Form No. N0201 and above on Tuesday, 11th January, 2022</li>
+                      </ul>
+                      </li>
+                    </ul>
+                    </Grid>
+                    <Grid>
+                    <Typography variant="h6" color="primary" >
+                      Submission
+                    </Typography>
+                    <ul type="disk">
+                      <li>Do pay Rs.500/- in cash at the school office.</li>
+                      <li>Print out of online registration form with parent's sign is mandatory.</li>
+                      <li>Original and Xerox copy of Birth Certificate (Original Birth Certificate will be given back).
+                      </li>
+                      <li>Christians should attach Baptism Certificate.</li>
+                    </ul>
+                  </Grid>
                   <Typography variant="h5" gutterBottom>
                     Thank you for registration.
                   </Typography>
@@ -242,7 +272,7 @@ export default function Checkout() {
                   {activeStep === steps.length - 2 ?
                     <Button
                       variant="contained"
-                      onClick={()=>{document.getElementById("parentformbtn").click();}}
+                      onClick={() => { document.getElementById("parentformbtn").click(); }}
                       sx={{ mt: 3, ml: 1 }}
                       disabled={loading}
                     >{loading && (
@@ -252,7 +282,7 @@ export default function Checkout() {
                       />
                     )}
                       Submit</Button>
-                    : 
+                    :
                     <Button
                       inputMode=""
                       variant="contained"

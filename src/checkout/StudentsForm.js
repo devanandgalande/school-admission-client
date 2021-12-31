@@ -11,11 +11,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function StudentsForm({ handleChange, values, setValidateForm }) {
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('First Name is required!')
-                            .max(20, 'First Name must have 20 chars only!'),
-    middleName: Yup.string().required('Middle Name is required!')
-                            .max(20, 'Middle Name must have 20 chars only!'),
-    lastName: Yup.string().required('Last Name is required!').max(20, 'Last Name must have 20 chars only!'),
+    firstName: Yup.string().required("Student's Name is required!")
+                            .max(20, "Student's Name must have 20 chars only!"),
+    middleName: Yup.string().required("Father's Name is required!")
+                            .max(20, "Father's Name must have 20 chars only!"),
+    lastName: Yup.string()
+                          // .required('Last Name is required!')
+                          .max(20, 'Last Name must have 20 chars only!'),
     placeOfBirth: Yup.string().required("Place of Birth is required!").max(30, 'Place must have 30 chars only!'),
     whatsapp: Yup.string().required("WhatsApp Number is required!")
                           .matches("^([0-9]{10})$", 'WhatsApp No. must contain 10 digits!'),
@@ -57,12 +59,27 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
           Student Details
         </Typography>
         <Grid container spacing={1} columnSpacing={4}>
+        <Grid item xs={12} sm={4}>
+            <TextField
+              // required
+              id="lastName"
+              name="lastName"
+              label="Surname"
+              fullWidth
+              variant="standard"
+              onChange={handleChange('lastName')}
+              defaultValue={values.lastName}
+              {...register('lastName')}
+              error={Boolean(errors.lastName)}
+              helperText={errors.lastName?.message}
+            />
+          </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               required
               id="firstName"
               name="firstName"
-              label="First name"
+              label="Student's Name"
               fullWidth
               variant="standard"
               onChange={handleChange('firstName')}
@@ -77,7 +94,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               required
               id="middleName"
               name="middleName"
-              label="Middle name"
+              label="Father's name"
               fullWidth
               variant="standard"
               onChange={handleChange('middleName')}
@@ -87,21 +104,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               helperText={errors.middleName?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="lastName"
-              name="lastName"
-              label="Last name"
-              fullWidth
-              variant="standard"
-              onChange={handleChange('lastName')}
-              defaultValue={values.lastName}
-              {...register('lastName')}
-              error={Boolean(errors.lastName)}
-              helperText={errors.lastName?.message}
-            />
-          </Grid>
+
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -187,7 +190,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
           </Grid>
           <Grid item xs={12} sm={6} style={{paddingTop: 0}}>
             <TextField
-              required
+              // required
               id="subcaste"
               name="subcaste"
               label="Sub-Caste"
