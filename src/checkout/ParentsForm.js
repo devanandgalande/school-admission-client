@@ -15,15 +15,14 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                           .required('Age is required!')
                           .min(10, 'Age must be greater than or equal to 10!')
                           .max(150, 'Age must be less than or equal to 150!')
-                          .integer('Age must be an Integer!'),
+                          .integer('Age is not valid!'),
     fatherProfession: Yup.string().required('Profession is required!').max(20, 'Profession must have 20 chars only!'),
     fatherLang: Yup.string().required('Mother Tongue is required!').max(20, 'Field must have 20 chars only!'),
     fatherEducation: Yup.string().required('Education is required!').max(20, 'Field must have 20 chars only!'),
     fatherContact: Yup.string().required('Contact is required!')
                                .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     fatherIncome: Yup.number().typeError('Income details is required!')
-                              .required('Income details is required!')
-                              .positive('Income must be positive!'),
+                              .required('Income details is required!'),
     fatherLangKnown: Yup.string().required('Languages known is required!').max(50, 'Field must have 50 chars only!'),
     motherName: Yup.string().required('Mother name is required!').max(50, 'Name must have 50 chars only!'),
     motherAge: Yup.number().typeError('Age is required!')
@@ -38,9 +37,10 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                               .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     motherIncome: Yup.number().typeError('Income details is required!')
                               .required('Income details is required!')
-                              .positive('Income must be positive!'),
+                              .min(0, 'Income must be positive!')
+                              .nullable(true),
     motherLangKnown: Yup.string().required('Languages known is required!'),
-    mentorContact: Yup.string().matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!').max(50, 'Field must have 50 chars only!'),
+    mentorContact: Yup.string().matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!').max(50, 'Contact no. must have 50 chars only!'),
     // mentorIncome: Yup.number().integer('Income must be positive').nullable(),
     
   });
@@ -159,6 +159,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
               <TextField
                 required
                 id="fatherContact"
+                type="number"
                 name="fatherContact"
                 label="Contact No."
                 fullWidth
@@ -302,6 +303,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
               <TextField
                 required
                 id="motherContact"
+                type="number"
                 name="motherContact"
                 label="Contact No."
                 fullWidth
@@ -417,6 +419,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
             <Grid item xs={12} sm={6}>
               <TextField
                 id="mentorContact"
+                type="number"
                 name="mentorContact"
                 label="Contact No."
                 fullWidth

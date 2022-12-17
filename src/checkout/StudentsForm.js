@@ -124,10 +124,12 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
             <TextField
               required
               id="whatsapp"
+              type="number"
               name="whatsapp"
               label="Parent's WhatsApp No."
               fullWidth
               variant="standard"
+              inputMode="numeric"
               onChange={handleChange('whatsapp')}
               defaultValue={values.whatsapp}
               {...register('whatsapp')}
@@ -254,11 +256,13 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
             <TextField
               required
               id="zip"
+              type="number"
               name="zip"
               label="Zip / Postal code"
               fullWidth
               autoComplete="shipping postal-code"
               variant="standard"
+              inputMode="numeric"
               onChange={handleChange('zip')}
               defaultValue={values.zip}
               {...register('zip')}
