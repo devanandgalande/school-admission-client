@@ -119,6 +119,7 @@ export default function Checkout() {
       setParentFormValid(false);
     }
     return () => setValidateForm(false);
+    // eslint-disable-next-line
   }, [validateForm, parentFormValid]);
 
   const handleChange = input => e => {
