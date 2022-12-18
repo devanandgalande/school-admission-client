@@ -4,7 +4,9 @@ import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import StudentsForm from './StudentsForm';
 import ParentsForm from './ParentsForm';
-import { Divider, Input, TextField, } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
 
 export default function ReviewForm({ handleChange, values }) {
   return (

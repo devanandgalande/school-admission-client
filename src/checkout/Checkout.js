@@ -10,12 +10,15 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import createTheme from '@mui/material/styles/createTheme';
+import FormHelperText from '@mui/material/FormHelperText';
+import Grid from '@mui/material/Grid';
+
 import ParentsForm from './ParentsForm';
 import StudentsForm from './StudentsForm';
 import Review from './Review';
 import studentdataService from '../services/studentdata.service';
-import { FormHelperText, Grid } from '@mui/material';
 import logo from '../logo_only.svg';
 import heading from '../heading.svg';
 
