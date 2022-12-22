@@ -10,6 +10,7 @@ class StudentDataService {
 //   }
 
   create(data) {
+    // console.log(data);
     return http.post("/studentdata", data);
   }
 

@@ -44,9 +44,14 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                       .matches("^(\\d{6,6})$",'Zip must contain 6 digits!'),
     country: Yup.string().required('Country is required!').max(30, 'City must have 30 chars only!'),
     caste: Yup.string().required('Caste is required!').max(30, 'Caste must have 30 chars only!'),
-    subcaste: Yup.string().max(30, 'Sub-caste must have 30 chars only!')
+    subcaste: Yup.string().max(30, 'Sub-caste must have 30 chars only!'),
     // standard: Yup.string().required('This field is required'),
     // consent: Yup.bool().oneOf([true], 'Please check the consent')
+    sibling1name: Yup.string().max(100, 'Sibling Name must be 100 chars long only!'),
+    sibling1std: Yup.string().max(20, 'Standard must be 20 chars long!'),
+    sibling2name: Yup.string().max(100, 'Sibling Name must be 100 chars long only!'),
+    sibling2std: Yup.string().max(20, 'Standard must be 20 chars long!'),
+
   })
   const { register, control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationSchema)
@@ -76,6 +81,7 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
               label="Surname"
               fullWidth
               variant="standard"
+              autoFocus
               onChange={handleChange('lastName')}
               defaultValue={values.lastName}
               {...register('lastName')}
@@ -314,8 +320,13 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                       fullWidth
                       size="small"
                       variant="standard"
+                      // onChange={handleChange('sibling1name')}
+                      // defaultValue={values.sibling1name}
                       onChange={handleChange('sibling1name')}
                       defaultValue={values.sibling1name}
+                      {...register('sibling1name')}
+                      error={Boolean(errors.sibling1name)}
+                      helperText={errors.sibling1name?.message}
                     />
                   </Grid>
                   <Grid item xs={10} sm={4}>
@@ -326,8 +337,13 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                       fullWidth
                       size="small"
                       variant="standard"
+                      // onChange={handleChange('sibling1std')}
+                      // defaultValue={values.sibling1std}
                       onChange={handleChange('sibling1std')}
                       defaultValue={values.sibling1std}
+                      {...register('sibling1std')}
+                      error={Boolean(errors.sibling1std)}
+                      helperText={errors.sibling1std?.message}
                     />
                   </Grid>
 
@@ -347,6 +363,9 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                       variant="standard"
                       onChange={handleChange('sibling2name')}
                       defaultValue={values.sibling2name}
+                      {...register('sibling2name')}
+                      error={Boolean(errors.sibling2name)}
+                      helperText={errors.sibling2name?.message}
                     />
                   </Grid>
                   <Grid item xs={10} sm={4}>
@@ -359,6 +378,9 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
                       variant="standard"
                       onChange={handleChange('sibling2std')}
                       defaultValue={values.sibling2std}
+                      {...register('sibling2std')}
+                      error={Boolean(errors.sibling2std)}
+                      helperText={errors.sibling2std?.message}
                     />
                   </Grid>
                 </Grid>

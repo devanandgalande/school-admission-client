@@ -26,7 +26,8 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
     fatherContact: Yup.string().required('Contact is required!')
                                .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     fatherIncome: Yup.number().typeError('Income details is required!')
-                              .required('Income details is required!'),
+                              .required('Income details is required!')
+                              .min(0, 'Income must be positive!'),
     fatherLangKnown: Yup.string().required('Languages known is required!').max(50, 'Field must have 50 chars only!'),
     motherName: Yup.string().required('Mother name is required!').max(50, 'Name must have 50 chars only!'),
     motherAge: Yup.number().typeError('Age is required!')
@@ -41,17 +42,41 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                               .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
     motherIncome: Yup.number().typeError('Income details is required!')
                               .required('Income details is required!')
-                              .min(0, 'Income must be positive!')
-                              .nullable(true),
+                              .min(0, 'Income must be positive!'),
     motherLangKnown: Yup.string().required('Languages known is required!'),
-    mentorContact: Yup.string().matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!').max(50, 'Contact no. must have 50 chars only!'),
-    // mentorIncome: Yup.number().integer('Income must be positive').nullable(),
+    mentorName: Yup.string().max(50, 'Name must have 50 chars only!').nullable(true),
+    mentorAge: Yup.number().notRequired().nullable(true)
+                          .transform((_, val) => val ? Number(val) : null)
+                          .max(150, 'Age must be less than or equal to 150!')
+                          .integer('Age must be a valid number!'),
+    mentorProfession: Yup.string().notRequired().max(20, 'Max 20 chars allowed!').nullable(true),
+    mentorLang: Yup.string().notRequired().max(20, 'Max 20 chars allowed!').nullable(true),
+    mentorEducation: Yup.string().notRequired().max(20, 'Max 20 chars allowed!').nullable(true),
+    mentorContact: Yup.string().notRequired().nullable(true)
+                      .transform((_, val) => val ? String(val) : null)
+                      .matches("^([0-9]{10}|null)$", 'Contact no. must contain 10 digits!')
+                      .max(10, 'Max 10 chars allowed!'),
+    mentorIncome: Yup.number().min(0,'Income must be positive')
+                      .nullable(true)
+                      .transform((_, val) => val ? Number(val) : null)
+                      ,
+
     
   });
 
-  const { register, control, handleSubmit, formState: { errors } } = useForm({
+  const { register, control, handleSubmit, formState: { errors }, setFocus } = useForm({
     resolver: yupResolver(validSchema),
   });
+
+  React.useEffect(() => {
+    const firstError = Object.keys(errors).reduce((field, a) => {
+      return !!errors[field] ? field : a;
+    }, null);
+  
+    if (firstError) {
+      setFocus(firstError);
+    }
+  }, [errors, setFocus]);
 
   const onSubmit = data => {
     setParentFormValid(true);
@@ -372,9 +397,17 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 onChange={handleChange('mentorName')}
                 defaultValue={values.mentorName}
+                {...register('mentorName')}
+                error={Boolean(errors.mentorName)}
+                helperText={errors.mentorName?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Controller
+                name="mentorAge"
+                control={control}
+                defaultValue={values.mentorAge}
+                render={({ field }) => (
               <TextField
                 type="number"
                 id="mentorAge"
@@ -384,8 +417,12 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 inputMode="numeric"
                 onChange={handleChange('mentorAge')}
-                value={values.mentorAge === 0 ? '' : values.mentorAge}
+                value={values.mentorAge ? values.mentorAge : ''}
+                {...field}
+                error={Boolean(errors.mentorAge)}
+                helperText={errors.mentorAge?.message}
               />
+              )} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -396,6 +433,9 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 onChange={handleChange('mentorProfession')}
                 defaultValue={values.mentorProfession}
+                {...register('mentorProfession')}
+                error={Boolean(errors.mentorProfession)}
+                helperText={errors.mentorProfession?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -407,6 +447,9 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 onChange={handleChange('mentorLang')}
                 defaultValue={values.mentorLang}
+                {...register('mentorLang')}
+                error={Boolean(errors.mentorLang)}
+                helperText={errors.mentorLang?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -418,6 +461,9 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 onChange={handleChange('mentorEducation')}
                 defaultValue={values.mentorEducation}
+                {...register('mentorEducation')}
+                error={Boolean(errors.mentorEducation)}
+                helperText={errors.mentorEducation?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -429,7 +475,10 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 fullWidth
                 variant="standard"
                 onChange={handleChange('mentorContact')}
-                defaultValue={values.mentorContact}
+                // defaultValue={values.mentorContact}
+                {...register('mentorContact')}
+                error={Boolean(errors.mentorContact)}
+                helperText={errors.mentorContact?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -447,7 +496,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                     variant="standard"
                     onChange={handleChange('mentorIncome')}
                     inputMode="numeric"
-                    value={values.mentorIncome}
+                    value={values.mentorIncome ? values.mentorIncome : ''}
                     {...field}
                     error={Boolean(errors.mentorIncome)}
                     helperText={errors.mentorIncome?.message}
@@ -463,6 +512,9 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 variant="standard"
                 onChange={handleChange('mentorRelation')}
                 defaultValue={values.mentorRelation}
+                {...register('mentorRelation')}
+                error={Boolean(errors.mentorRelation)}
+                helperText={errors.mentorRelation?.message}
               />
             </Grid>
           </Grid>
