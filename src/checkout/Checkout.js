@@ -225,11 +225,11 @@ export default function Checkout() {
                         Acquiring online registration form does not guarantee admission in the school,
                         the seats available are limited.
                       </li>
-                      <li>Forms should be submitted on <strong>10th &amp; 11th Jan 2023 </strong> between 
-                      <strong> 8:30 AM to 12:30 PM</strong> at school office.
+                      <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2023 </strong> between 
+                      <strong> 8:30 AM to 12:30 PM</strong> at the school office.
                       <ul id="cust_list_item1" className="cust_list_type">
-                        <li>Form No. N0001 to N0200 on Monday, 10th January, 2023</li>
-                        <li>Form No. N0201 and above on Tuesday, 11th January, 2023</li>
+                        <li>Form No. N0001 to N0200 on Monday, 9th January, 2023</li>
+                        <li>Form No. N0201 and above on Tuesday, 10th January, 2023</li>
                       </ul>
                       </li>
                     </ul>
@@ -258,7 +258,7 @@ export default function Checkout() {
                       variant="contained"
                       onClick={() => window.print()}
                       sx={{ mt: 3, ml: 1 }}
-                    > Print Application </Button>
+                    > Download Application Form</Button>
                     }
                   </Box>
                 </div>

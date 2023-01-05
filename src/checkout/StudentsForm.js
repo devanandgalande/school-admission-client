@@ -33,8 +33,8 @@ export default function StudentsForm({ handleChange, values, setValidateForm }) 
     dob: Yup.string().typeError('Date of Birth is required!')
                     .required('Date of Birth is required!')
                     // .min(new Date("2018-10-01").toLocaleDateString(), "Date of Birth must be later than 1st Oct, 2018")
-                    .test("dob","Date of Birth must be between 1st Oct, 2018 to 31st Dec, 2019!",
-                    (value)=> new Date(value)>=new Date("2018-10-01") && new Date(value)<=new Date("2019-12-31")),
+                    .test("dob","Date of Birth must be between 1st July, 2019 to 31st Dec, 2020!",
+                    (value)=> new Date(value)>=new Date("2019-07-01") && new Date(value)<=new Date("2020-12-31")),
                     // .max("31-12-2019", "Date of Birth must be earlier than 31st Dec, 2019"),
     gender: Yup.string().required('Gender is required!'),
     address: Yup.string().required('Address is required!').max(150, 'Address Name must have 150 chars only!'),

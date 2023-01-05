@@ -35,14 +35,15 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                           .min(10, 'Age must be greater than or equal to 10!')
                           .max(150, 'Age must be less than or equal to 150!')
                           .integer('Age must be an Integer!'),
-    motherProfession: Yup.string().required('Profession is required!').max(20, 'Field must have 20 chars only!'),
+    motherProfession: Yup.string().notRequired().max(20, 'Field must have 20 chars only!'),
     motherLang: Yup.string().required('Mother Tongue is required!').max(20, 'Field must have 20 chars only!'),
     motherEducation: Yup.string().required('Education is required!').max(20, 'Field must have 20 chars only!'),
     motherContact: Yup.string().required('Contact is required!')
                               .matches("^([0-9]{10})$", 'Contact no. must contain 10 digits!'),
-    motherIncome: Yup.number().typeError('Income details is required!')
-                              .required('Income details is required!')
-                              .min(0, 'Income must be positive!'),
+    motherIncome: Yup.number().notRequired()
+                              .min(0, 'Income must be positive!')
+                              .nullable(true)
+                              .transform((_, val) => val ? Number(val) : null),
     motherLangKnown: Yup.string().required('Languages known is required!'),
     mentorName: Yup.string().max(50, 'Name must have 50 chars only!').nullable(true),
     mentorAge: Yup.number().notRequired().nullable(true)
@@ -520,21 +521,21 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
           </Grid>
           &nbsp;
       <Divider variant="middle"><Chip label="Notice" /> </Divider>
-      <Grid container item sx={{ fontWeight: "300", fontSize: "small" }}>
+      <Grid container item sx={{ fontWeight: "600", fontSize: "small" }}>
         <ul type="disk">
           <li>
             Acquiring online registration form does not guarantee admission in the school,
             the seats available are limited.
           </li>
-          <li>The form is valid only for the child whose name is entered by the school office.
+          <li>The form is valid only for the child whose name is registered online and submitted to the school office.
           </li>
           <li>This school is recognized Unaided English Medium School. There are no fee concessions.
             Fees are subject to rise.
           </li>
           <li>No Refund of the fees, once paid.
           </li>
-          <li>The school has not given permission to any person to collect donations in the name of
-            the school for admission.
+          <li>The school accepts no donations. (The school has not given permission to any person to collect donations in the name of
+            the school for admission.)
           </li>
         </ul>
       </Grid>
