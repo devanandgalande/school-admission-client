@@ -286,14 +286,13 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 id="motherProfession"
                 name="motherProfession"
                 label="Profession"
                 fullWidth
                 variant="standard"
                 onChange={handleChange('motherProfession')}
-                defaultValue={values.motherProfession}
+                defaultValue={values.motherProfession?values.motherProfession:''}
                 {...register('motherProfession')}
                 error={Boolean(errors.motherProfession)}
                 helperText={errors.motherProfession?.message}
@@ -352,7 +351,6 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                 defaultValue={values.motherIncome}
                 render={({ field }) => (
                   <TextField
-                    required
                     type="number"
                     name="motherIncome"
                     label="Monthly Income"
@@ -361,7 +359,7 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
                     variant="standard"
                     onChange={handleChange('motherIncome')}
                     inputMode="numeric"
-                    value={values.motherIncome}
+                    value={values.motherIncome ? values.motherIncome : ''}
                     {...field}
                     error={Boolean(errors.motherIncome)}
                     helperText={errors.motherIncome?.message}
@@ -521,13 +519,13 @@ export default function ParentsForm({ handleChange, values, setParentFormValid }
           </Grid>
           &nbsp;
       <Divider variant="middle"><Chip label="Notice" /> </Divider>
-      <Grid container item sx={{ fontWeight: "600", fontSize: "small" }}>
+      <Grid container item sx={{ fontWeight: "600",color:"rgba(0,0,0,1)", fontSize: "small" }}>
         <ul type="disk">
           <li>
             Acquiring online registration form does not guarantee admission in the school,
             the seats available are limited.
           </li>
-          <li>The form is valid only for the child whose name is registered online and submitted to the school office.
+          <li>The form is valid only for the child whose name is registered online and submitted to school office.
           </li>
           <li>This school is recognized Unaided English Medium School. There are no fee concessions.
             Fees are subject to rise.
