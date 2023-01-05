@@ -25,11 +25,25 @@ code {
     /* font-family: Arial, Helvetica, sans-serif; */
     
     }
+    #parent-form {
+      page-break-before: always;
+      margin-top: 0.5cm;
+    }
     
     @page {
       margin: 0% !important;
-      margin-top: 0.35in !important;
+      /* margin-top: 0.1in !important; */
       size: letter;
+
+      
+      /* page-break-inside: auto;
+      page-break-after: always; */
+      width: 21cm;
+      height: 29.7cm;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5cm;
+      box-shadow: none;
     }
     
 }
