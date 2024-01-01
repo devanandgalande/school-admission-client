@@ -225,11 +225,11 @@ export default function Checkout() {
                         Acquiring online registration form does not guarantee admission in the school,
                         the seats available are limited.
                       </li>
-                      <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2023 </strong> between 
+                      <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2024 </strong> between 
                       <strong> 8:30 AM to 12:30 PM</strong> at the school office.
                       <ul id="cust_list_item1" className="cust_list_type">
-                        <li>Form No. N0001 to N0200 on Monday, 9th January, 2023</li>
-                        <li>Form No. N0201 and above on Tuesday, 10th January, 2023</li>
+                        <li>Form No. N0001 to N0200 on Monday, 9th January, 2024</li>
+                        <li>Form No. N0201 and above on Tuesday, 10th January, 2024</li>
                       </ul>
                       </li>
                     </ul>
