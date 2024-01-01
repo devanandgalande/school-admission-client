@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-  // baseURL: "https://fair-rose-lemur-gown.cyclic.app/api",
-  baseURL: process.env.SERVER_URL || "http://localhost:8080/api",
+  baseURL: "https://weak-erin-alligator-vest.cyclic.app/api",
+  // baseURL: process.env.SERVER_URL,
   headers: {
     "Content-type": "application/json"
   }
