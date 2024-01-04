@@ -23,6 +23,7 @@ import logo from '../logo_only.svg';
 import heading from '../heading.svg';
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { CircularProgress } from '@mui/material';
 
 function Copyright() {
   return (
@@ -193,49 +194,55 @@ export default function Checkout() {
   }
 
   const createPDF = async () => {
+    setLoading(true);
     const pdf = new jsPDF("portrait", "cm", "a4");
     // document.querySelectorAll(".no-print").forEach((el) => {
     //   el.style.display = "none";
     // });
-    document.querySelectorAll(".printable").forEach((el) => {
-      el.style.display = "block";
-      el.style.position = "fixed";
-      el.style.left = "-9999px";
-    });
-    let data = await html2canvas(document.querySelector("#heading"), {
-      foreignObjectRendering: false,
-      scale: 2,
-      ignoreMouse: true,
-    });
+    try {
+      document.querySelectorAll(".printable").forEach((el) => {
+        el.style.display = "block";
+        el.style.position = "fixed";
+        el.style.left = "-9999px";
+      });
+      let data = await html2canvas(document.querySelector("#heading"), {
+        foreignObjectRendering: false,
+        scale: 2,
+        ignoreMouse: true,
+      });
 
-    let img = data.toDataURL("image/jpeg");
-    let imgProperties = pdf.getImageProperties(img);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-    pdf.addImage(img, "JPEG", 0, 0, pdfWidth, pdfHeight);
+      let img = data.toDataURL("image/jpeg");
+      let imgProperties = pdf.getImageProperties(img);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+      pdf.addImage(img, "JPEG", 0, 0, pdfWidth, pdfHeight);
 
-    data = await html2canvas(document.querySelector("#firstpage"), {
-      foreignObjectRendering: false,
-      scale: 2,
-      ignoreMouse: true,
-    });
-    img = data.toDataURL("image/jpeg");
-    imgProperties = pdf.getImageProperties(img);
-    pdf.addImage(img, "JPEG", 1, pdfHeight, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
-    
-    //Adding a page break here
-    pdf.addPage();
-    data = await html2canvas(document.querySelector("#secondpage"), {
-      foreignObjectRendering: false,
-      scale: 2,
-      ignoreMouse: true,
-    });
-    img = data.toDataURL("image/jpeg");
-    imgProperties = pdf.getImageProperties(img);
+      data = await html2canvas(document.querySelector("#firstpage"), {
+        foreignObjectRendering: false,
+        scale: 2,
+        ignoreMouse: true,
+      });
+      img = data.toDataURL("image/jpeg");
+      imgProperties = pdf.getImageProperties(img);
+      pdf.addImage(img, "JPEG", 1, pdfHeight, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
 
-    pdf.addImage(img, "JPEG", 1, 1, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
+      //Adding a page break here
+      pdf.addPage();
+      data = await html2canvas(document.querySelector("#secondpage"), {
+        foreignObjectRendering: false,
+        scale: 2,
+        ignoreMouse: true,
+      });
+      img = data.toDataURL("image/jpeg");
+      imgProperties = pdf.getImageProperties(img);
 
-    pdf.save("Application Form.pdf");
+      pdf.addImage(img, "JPEG", 1, 1, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
+
+      pdf.save("Application Form.pdf");
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -308,12 +315,18 @@ export default function Checkout() {
                     application from below.
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    {<Button
+                    <Button
                       variant="contained"
                       onClick={createPDF}
                       sx={{ mt: 3, ml: 1 }}
+                      disabled={loading}
                     > Download Application Form</Button>
-                    }
+                    {loading && <CircularProgress size={30}
+                      sx={{
+                        position: 'absolute',
+                        left: '',
+                        marginTop: '20pt',
+                      }} />}
                   </Box>
                 </div>
                 {getStepContent(2)}
@@ -333,12 +346,12 @@ export default function Checkout() {
                       onClick={() => { document.getElementById("parentformbtn").click(); }}
                       sx={{ mt: 3, ml: 1 }}
                       disabled={loading}
-                    >{loading && (
-                      <i
-                        className="fa fa-refresh fa-spin"
-                        style={{ marginRight: "5px" }}
-                      />
-                    )}
+                    >{loading && <CircularProgress size={30}
+                      sx={{
+                        position: 'absolute',
+                        left: '',
+                        marginTop: '',
+                      }} />}
                       Submit</Button>
                     :
                     <Button
