@@ -21,6 +21,8 @@ import Review from './Review';
 import studentdataService from '../services/studentdata.service';
 import logo from '../logo_only.svg';
 import heading from '../heading.svg';
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 function Copyright() {
   return (
@@ -173,7 +175,13 @@ export default function Checkout() {
           setParentFormValid={setParentFormValid}
         />;
       case 2:
-        return (<div className="printable">
+        return (<div id="review" className="printable" style={{
+          width: "21cm",
+          height: "29.7cm",
+          margin: "0 auto",
+          marginBottom: "0.5cm",
+          boxShadow: "none"
+        }} >
           <Review
             handleChange={handleChange}
             values={values}
@@ -183,6 +191,52 @@ export default function Checkout() {
         throw new Error('Unknown step');
     }
   }
+
+  const createPDF = async () => {
+    const pdf = new jsPDF("portrait", "cm", "a4");
+    // document.querySelectorAll(".no-print").forEach((el) => {
+    //   el.style.display = "none";
+    // });
+    document.querySelectorAll(".printable").forEach((el) => {
+      el.style.display = "block";
+      el.style.position = "fixed";
+      el.style.left = "-9999px";
+    });
+    let data = await html2canvas(document.querySelector("#heading"), {
+      foreignObjectRendering: false,
+      scale: 2,
+      ignoreMouse: true,
+    });
+
+    let img = data.toDataURL("image/jpeg");
+    let imgProperties = pdf.getImageProperties(img);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+    pdf.addImage(img, "JPEG", 0, 0, pdfWidth, pdfHeight);
+
+    data = await html2canvas(document.querySelector("#firstpage"), {
+      foreignObjectRendering: false,
+      scale: 2,
+      ignoreMouse: true,
+    });
+    img = data.toDataURL("image/jpeg");
+    imgProperties = pdf.getImageProperties(img);
+    pdf.addImage(img, "JPEG", 1, pdfHeight, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
+    
+    //Adding a page break here
+    pdf.addPage();
+    data = await html2canvas(document.querySelector("#secondpage"), {
+      foreignObjectRendering: false,
+      scale: 2,
+      ignoreMouse: true,
+    });
+    img = data.toDataURL("image/jpeg");
+    imgProperties = pdf.getImageProperties(img);
+
+    pdf.addImage(img, "JPEG", 1, 1, pdfWidth - 2, (imgProperties.height * pdfWidth) / imgProperties.width);
+
+    pdf.save("Application Form.pdf");
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -198,7 +252,7 @@ export default function Checkout() {
 
       >
         <Box textAlign="center" className="no-print"><img src={logo} alt="logo" className="svg" /></Box>
-        <Box textAlign="center" className="printable"><img src={heading} alt="logo" className="svg-heading" /></Box>
+        {/* <Box textAlign="center" id="heading" className="printable"><img src={heading} alt="logo" className="svg-heading" /></Box> */}
 
       </AppBar>
       <Container component="main" maxWidth="md" sx={{ mb: 3 }} >
@@ -225,16 +279,16 @@ export default function Checkout() {
                         Acquiring online registration form does not guarantee admission in the school,
                         the seats available are limited.
                       </li>
-                      <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2024 </strong> between 
-                      <strong> 8:30 AM to 12:30 PM</strong> at the school office.
-                      <ul id="cust_list_item1" className="cust_list_type">
-                        <li>Form No. N0001 to N0200 on Monday, 9th January, 2024</li>
-                        <li>Form No. N0201 and above on Tuesday, 10th January, 2024</li>
-                      </ul>
+                      <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2024 </strong> between
+                        <strong> 8:30 AM to 12:30 PM</strong> at the school office.
+                        <ul id="cust_list_item1" className="cust_list_type">
+                          <li>Form No. N0001 to N0200 on Monday, 9th January, 2024</li>
+                          <li>Form No. N0201 and above on Tuesday, 10th January, 2024</li>
+                        </ul>
                       </li>
                     </ul>
-                    </Grid>
-                    <Grid>
+                  </Grid>
+                  <Grid>
                     <Typography variant="h6" color="primary" >
                       Submission
                     </Typography>
@@ -256,7 +310,7 @@ export default function Checkout() {
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     {<Button
                       variant="contained"
-                      onClick={() => window.print()}
+                      onClick={createPDF}
                       sx={{ mt: 3, ml: 1 }}
                     > Download Application Form</Button>
                     }
