@@ -228,8 +228,8 @@ export default function Checkout() {
                       <li>Forms should be submitted on <strong>9th &amp; 10th Jan 2024 </strong> between 
                       <strong> 8:30 AM to 12:30 PM</strong> at the school office.
                       <ul id="cust_list_item1" className="cust_list_type">
-                        <li>Form No. N0001 to N0200 on Monday, 9th January, 2024</li>
-                        <li>Form No. N0201 and above on Tuesday, 10th January, 2024</li>
+                        <li>Form No. N0001 to N0200 on Tuesday, 9th January, 2024</li>
+                        <li>Form No. N0201 and above on Wednesday, 10th January, 2024</li>
                       </ul>
                       </li>
                     </ul>
